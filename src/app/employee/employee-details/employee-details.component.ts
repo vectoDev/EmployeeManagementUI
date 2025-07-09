@@ -20,9 +20,7 @@ export class EmployeeDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    debugger;
     this.employeeId = this.authService.getEmployeeId(); 
-    debugger;
     if (this.employeeId) {
       this.employeeService.getEmployeeById(this.employeeId).subscribe({
         next:  (data) => {

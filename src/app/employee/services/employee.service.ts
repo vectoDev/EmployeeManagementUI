@@ -11,6 +11,16 @@ export interface Employee {
   DepartmentId: number;
   DesignationId:number;
 }
+export interface EmployeeList {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  dateOfJoining: string;
+  departmentName: string;
+  designationName: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +32,17 @@ export class EmployeeService {
   constructor(private http: HttpClient) {}
 
   getEmployeeById(id: string | null): Observable<Employee> {
-    debugger;
-    return this.http.get<Employee>(`${this.baseUrl}/${id}`);
+    return this.http.get<Employee>(`${this.baseUrl}/GetEmployeeById/${id}`);
   }
 
-  getAllEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.baseUrl);
-  }
+  getAllEmployees(): Observable<EmployeeList[]> {
+  var emp = this.http.get<EmployeeList[]>(`${this.baseUrl}/GetAllEmployees`);
+  console.log(emp);
+  return emp;
+}
+
+
+  deleteEmployee(id: string): Observable<void> {
+  return this.http.delete<void>(`${this.baseUrl}/DeleteEmployeeById/${id}`);
+}
 }

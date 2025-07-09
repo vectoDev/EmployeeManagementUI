@@ -31,7 +31,6 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe({
       next: () => {
         const employeeId = this.authService.getEmployeeId();
-        debugger;
         if (employeeId) {
           this.router.navigate(['/dashboard']);
         } else {

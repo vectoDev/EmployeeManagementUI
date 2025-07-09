@@ -61,7 +61,6 @@ export class AuthService {
     if (!token) return null;
     try {
       const decoded: any = jwtDecode(token);
-      debugger;
       return decoded[ROLE_CLAIM] || null;
     } catch (error) {
       return null;
@@ -71,7 +70,6 @@ export class AuthService {
     const token = this.getAccessToken();
     if (!token) return null;
     try {
-      debugger;
       const decoded = jwtDecode<{ employeeId?: string }>(token);
       return decoded.employeeId || null;
     }
