@@ -1,0 +1,32 @@
+<div class="employee-details-container" *ngIf="employee; else loadingOrError">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Employee Details</mat-card-title>
+      </mat-card-header>
+  
+      <mat-card-content>
+        <div class="employee-info">
+          <mat-list>
+            <mat-list-item>
+              <strong>ID:</strong> {{ employee.id }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Name:</strong> {{employee.firstName +' '+ employee.lastName}}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Email:</strong> {{ employee.email }}
+            </mat-list-item>
+            <mat-list-item>
+              <strong>Phone:</strong> {{ employee.phone }}
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <ng-template #loadingOrError>
+    <mat-spinner></mat-spinner>
+    <p *ngIf="!employeeId">No employee ID found for the logged-in user.</p>
+  </ng-template>
+  
