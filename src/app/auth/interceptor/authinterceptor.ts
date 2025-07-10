@@ -30,6 +30,8 @@ export class AuthInterceptor implements HttpInterceptor {
               return next.handle(newReq);
             }),
             catchError(err => {
+              debugger;
+              console.log('Error in refresh logic',err)
               this.authService.logout(); // if refresh also fails, logout
               return throwError(() => err);
             })

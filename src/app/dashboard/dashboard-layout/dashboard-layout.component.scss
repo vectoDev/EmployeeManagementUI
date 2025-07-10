@@ -4,7 +4,7 @@
   
   .sidenav {
     width: 220px;
-    margin-top: 64px; // match toolbar height
+    margin-top: 64px;
   }
   
   .top-toolbar {
@@ -25,11 +25,11 @@
   
   mat-sidenav-content {
     padding-top: 64px; // match toolbar height
-    padding-left: 220px; // match sidenav width
+    padding-left: 50px; // match sidenav width
     box-sizing: border-box;
   }
   
   .main-content {
-    padding: 24px;
+   padding: 24px 24px 24px 0;
   }
   

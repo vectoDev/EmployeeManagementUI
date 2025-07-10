@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee, EmployeeList, EmployeeService } from '../services/employee.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EmployeeCreateComponent } from '../employee-create/employee-create.component';
+import { EmployeeEditComponent } from '../employee-edit/employee-edit.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -7,34 +10,55 @@ import { Employee, EmployeeList, EmployeeService } from '../services/employee.se
   styleUrls: ['./employee-list.component.scss']
 })
 export class EmployeeListComponent implements OnInit {
-  employees: Employee[] = [];
-  EmployeeList : EmployeeList[] = [];
-  displayedColumns: string[] = ['id', 'name', 'email','department','Designation', 'actions'];
+  employees: EmployeeList[] = [];
+  displayedColumns: string[] = [
+  'firstName',
+  'lastName',
+  'email',
+  'phone',
+  'departmentName',
+  'designationName',
+  'actions'
+];
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(private empService: EmployeeService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadEmployees();
   }
 
   loadEmployees(): void {
-    this.employeeService.getAllEmployees().subscribe({
-      next: (data) => {
-        this.EmployeeList = data;
-        console.log('Employee list:', data);
-      },
-      error: (err) => console.error('Failed to fetch employees', err)
+    this.empService.getAllEmployees().subscribe(data => this.employees = data);
+  }
+
+  openCreateDialog(): void {
+    const dialogRef = this.dialog.open(EmployeeCreateComponent, {
+      width: '600px',
+       maxHeight: '100vh',
+  panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadEmployees();
     });
   }
 
-  editEmployee(id: string): void {
-    console.log('Edit employee with ID:', id);
-    // Navigate to edit component or open dialog
+  openEditDialog(id: number): void {
+    const dialogRef = this.dialog.open(EmployeeEditComponent, {
+      width: '600px',
+      maxHeight: '100vh',
+      panelClass: 'custom-dialog-container',
+      data: { id: id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadEmployees();
+    });
   }
 
   deleteEmployee(id: string): void {
     if (confirm('Are you sure you want to delete this employee?')) {
-      this.employeeService.deleteEmployee(id).subscribe({
+      this.empService.deleteEmployee(id).subscribe({
         next: () => this.loadEmployees(),
         error: (err) => console.error('Delete failed', err)
       });
